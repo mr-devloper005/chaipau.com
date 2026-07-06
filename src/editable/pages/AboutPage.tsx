@@ -9,7 +9,7 @@ export default function AboutPage() {
         <section className="mx-auto grid max-w-[var(--editable-container)] gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <article className="rounded-sm border border-[var(--editable-border)] bg-[var(--slot4-surface-bg)] p-8 lg:p-12">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--slot4-accent)]">{pagesContent.about.badge}</p>
-            <h1 className="editable-display mt-5 text-5xl font-semibold tracking-[-0.02em]">About {SITE_CONFIG.name}</h1>
+            <h1 className="editable-display mt-5 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">About {SITE_CONFIG.name}</h1>
             <p className="mt-5 max-w-2xl text-base leading-8 text-[var(--slot4-muted-text)]">{pagesContent.about.description}</p>
             <div className="mt-8 space-y-4 text-sm leading-8 text-[var(--slot4-muted-text)]">
               {pagesContent.about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
