@@ -1,39 +1,46 @@
 import type { CSSProperties } from 'react'
 
 export const editableRootStyle = {
-  // Yelp-style system: clean white surfaces, signature red accent, hairline
-  // gray borders, near-black text. Flat (no gradients), generous and premium.
-  '--slot4-page-bg': '#ffffff',
-  '--slot4-page-text': '#1a1a1a',
-  '--slot4-panel-bg': '#f7f7f7',
+  // Luxury editorial system: warm off-white paper, deep charcoal ink, a
+  // confident orange accent for action, and a deep teal for secondary
+  // emphasis. Dark charcoal nav/footer for contrast, flat surfaces, hairline
+  // borders — generous and premium, never loud.
+  '--slot4-page-bg': '#F4F2F2',
+  '--slot4-page-text': '#1D2128',
+  '--slot4-panel-bg': '#EDEAE8',
   '--slot4-surface-bg': '#ffffff',
-  '--slot4-muted-text': '#6b6b6b',
-  '--slot4-soft-muted-text': '#999999',
-  '--slot4-accent': '#d32323',
-  '--slot4-accent-fill': '#d32323',
-  '--slot4-accent-soft': '#fdecec',
-  '--slot4-on-accent': '#ffffff',
-  '--slot4-dark-bg': '#1a1a1a',
-  '--slot4-dark-text': '#ffffff',
-  '--slot4-media-bg': '#eeeeee',
-  '--slot4-cream': '#ffffff',
-  '--slot4-warm': '#f7f7f7',
-  '--slot4-lavender': '#ffffff',
-  '--slot4-gray': '#f7f7f7',
-  '--slot4-body-gradient': 'none',
-  '--editable-page-bg': '#ffffff',
-  '--editable-page-text': '#1a1a1a',
+  '--slot4-muted-text': '#5B6570',
+  '--slot4-soft-muted-text': '#8A9099',
+  '--slot4-accent': '#FF9E20',
+  '--slot4-accent-fill': '#FF9E20',
+  '--slot4-accent-soft': '#FFF1DC',
+  '--slot4-on-accent': '#1D2128',
+  '--slot4-secondary': '#215E61',
+  '--slot4-secondary-soft': '#E4EFEE',
+  '--slot4-dark-bg': '#1D2128',
+  '--slot4-dark-text': '#F4F2F2',
+  '--slot4-media-bg': '#EDEAE8',
+  '--slot4-cream': '#F4F2F2',
+  '--slot4-warm': '#EDEAE8',
+  '--slot4-lavender': '#E4EFEE',
+  '--slot4-gray': '#EDEAE8',
+  // Faint amber + teal wash over the paper so the page reads as a considered
+  // surface rather than a flat off-white fill.
+  '--slot4-body-gradient':
+    'radial-gradient(1100px 620px at 12% -8%, rgba(255,158,32,0.07), transparent 58%), radial-gradient(900px 560px at 102% 4%, rgba(33,94,97,0.07), transparent 55%), radial-gradient(1400px 800px at 50% 115%, rgba(29,33,40,0.035), transparent 60%)',
+  '--editable-page-bg': '#F4F2F2',
+  '--editable-page-text': '#1D2128',
   '--editable-container': '1500px',
-  '--editable-border': '#e6e6e6',
-  '--editable-nav-bg': '#ffffff',
-  '--editable-nav-text': '#1a1a1a',
-  '--editable-nav-active': '#d32323',
-  '--editable-nav-active-text': '#ffffff',
-  '--editable-cta-bg': '#d32323',
-  '--editable-cta-text': '#ffffff',
+  '--editable-border': '#E1DDD9',
+  '--editable-nav-bg': '#1D2128',
+  '--editable-nav-text': '#F4F2F2',
+  '--editable-nav-active': '#FF9E20',
+  '--editable-nav-active-text': '#1D2128',
+  '--editable-cta-bg': '#FF9E20',
+  '--editable-cta-text': '#1D2128',
   '--editable-search-bg': '#ffffff',
-  '--editable-footer-bg': '#ffffff',
-  '--editable-footer-text': '#1a1a1a',
+  '--editable-footer-bg': '#1D2128',
+  '--editable-footer-text': '#F4F2F2',
 } as CSSProperties
 
 export const editablePalette = {
@@ -50,6 +57,8 @@ export const editablePalette = {
   accentSoftBg: 'bg-[var(--slot4-accent-soft)]',
   accentSoftText: 'text-[var(--slot4-accent-soft)]',
   onAccentText: 'text-[var(--slot4-on-accent)]',
+  secondaryText: 'text-[var(--slot4-secondary)]',
+  secondarySoftBg: 'bg-[var(--slot4-secondary-soft)]',
   darkBg: 'bg-[var(--slot4-dark-bg)]',
   darkText: 'text-[var(--slot4-dark-text)]',
   mediaBg: 'bg-[var(--slot4-media-bg)]',
@@ -59,9 +68,9 @@ export const editablePalette = {
   grayBg: 'bg-[var(--slot4-gray)]',
   border: 'border-[var(--editable-border)]',
   darkBorder: 'border-white/10',
-  shadow: 'shadow-[0_1px_3px_rgba(0,0,0,0.08)]',
-  shadowStrong: 'shadow-[0_4px_18px_rgba(0,0,0,0.12)]',
-  overlay: 'bg-[linear-gradient(180deg,rgba(0,0,0,0.02),rgba(0,0,0,0.72))]',
+  shadow: 'shadow-[0_1px_3px_rgba(29,33,40,0.06)]',
+  shadowStrong: 'shadow-[0_18px_48px_rgba(29,33,40,0.12)]',
+  overlay: 'bg-[linear-gradient(180deg,rgba(29,33,40,0.02),rgba(29,33,40,0.82))]',
 } as const
 
 export const editableDesignContract = {
@@ -83,21 +92,21 @@ export const editableDesignContract = {
     body: 'text-base leading-relaxed',
   },
   surface: {
-    card: `rounded-xl border ${editablePalette.border} ${editablePalette.surfaceBg} ${editablePalette.shadow}`,
-    soft: `rounded-xl border ${editablePalette.border} ${editablePalette.panelBg}`,
-    dark: `rounded-xl ${editablePalette.darkBg} ${editablePalette.darkText} ${editablePalette.shadowStrong}`,
+    card: `rounded-2xl border ${editablePalette.border} ${editablePalette.surfaceBg} ${editablePalette.shadow}`,
+    soft: `rounded-2xl border ${editablePalette.border} ${editablePalette.panelBg}`,
+    dark: `rounded-2xl ${editablePalette.darkBg} ${editablePalette.darkText} ${editablePalette.shadowStrong}`,
   },
   button: {
-    primary: `inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--slot4-accent-fill)] px-6 py-3 text-sm font-bold tracking-[0.01em] text-[var(--slot4-on-accent)] transition duration-200 hover:brightness-95 active:scale-[0.98]`,
-    secondary: `inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--editable-border)] bg-[var(--slot4-surface-bg)] px-6 py-3 text-sm font-bold tracking-[0.01em] text-[var(--slot4-page-text)] transition duration-200 hover:border-[var(--slot4-accent)] hover:text-[var(--slot4-accent)] active:scale-[0.98]`,
-    accent: `inline-flex items-center justify-center gap-2 rounded-lg ${editablePalette.accentBg} px-6 py-3 text-sm font-bold text-[var(--slot4-on-accent)] transition duration-200 hover:brightness-95 active:scale-[0.98]`,
+    primary: `inline-flex items-center justify-center gap-2 rounded-full bg-[var(--slot4-accent-fill)] px-6 py-3 text-sm font-semibold tracking-[0.01em] text-[var(--slot4-on-accent)] transition duration-300 hover:brightness-95 active:scale-[0.98]`,
+    secondary: `inline-flex items-center justify-center gap-2 rounded-full border border-[var(--editable-border)] bg-[var(--slot4-surface-bg)] px-6 py-3 text-sm font-semibold tracking-[0.01em] text-[var(--slot4-page-text)] transition duration-300 hover:border-[var(--slot4-accent)] hover:text-[var(--slot4-accent)] active:scale-[0.98]`,
+    accent: `inline-flex items-center justify-center gap-2 rounded-full ${editablePalette.accentBg} px-6 py-3 text-sm font-semibold text-[var(--slot4-on-accent)] transition duration-300 hover:brightness-95 active:scale-[0.98]`,
   },
   media: {
-    frame: `relative overflow-hidden rounded-xl ${editablePalette.mediaBg}`,
+    frame: `relative overflow-hidden rounded-2xl ${editablePalette.mediaBg}`,
     ratio: 'aspect-[2/3]',
   },
   motion: {
-    lift: 'transition duration-300 hover:-translate-y-1 hover:shadow-[0_8px_28px_rgba(0,0,0,0.14)]',
+    lift: 'transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_48px_rgba(29,33,40,0.14)]',
     fade: 'transition duration-300 hover:opacity-80',
   },
 } as const

@@ -3,80 +3,74 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, Search, UserPlus, LogIn, X, PlusCircle } from 'lucide-react'
+import { Menu, UserPlus, LogIn, X, PlusCircle } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/site-config'
 import { globalContent } from '@/editable/content/global.content'
 import { useEditableLocalAuthSession } from '@/editable/components/EditableLocalAuthForms'
+
+// These listing pages are browse-only surfaces reached from post/content
+// links, not from a standalone nav button — keep them out of the primary nav.
+const HIDDEN_NAV_TASKS = new Set(['profile', 'image'])
 
 export function EditableNavbar() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const { session, logout } = useEditableLocalAuthSession()
   const navItems = useMemo(
-    () => SITE_CONFIG.tasks.filter((task) => task.enabled).map((task) => ({ label: task.label, href: task.route })),
+    () =>
+      SITE_CONFIG.tasks
+        .filter((task) => task.enabled && !HIDDEN_NAV_TASKS.has(task.key))
+        .map((task) => ({ label: task.label, href: task.route })),
     []
+  )
+  const primaryNav = useMemo(
+    () => [{ label: 'Home', href: '/' }, ...navItems, { label: 'Search', href: '/search' }, { label: 'About', href: '/about' }],
+    [navItems]
   )
 
   return (
-    <header className="sticky top-0 z-50 bg-[var(--editable-nav-bg)]/96 text-[var(--editable-nav-text)] backdrop-blur-md">
-      <div className="h-[3px] bg-[linear-gradient(90deg,transparent_0%,var(--slot4-accent)_20%,var(--slot4-accent)_80%,transparent_100%)]" />
-
-      <nav className="mx-auto flex min-h-[76px] w-full max-w-[var(--editable-container)] items-center gap-5 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="group flex shrink-0 items-center gap-3 border-r border-[var(--editable-border)] pr-5">
-          <span className="flex h-11 w-11 items-center justify-center border border-[var(--slot4-accent)]/45 bg-[var(--slot4-surface-bg)] transition group-hover:border-[var(--slot4-accent)]">
-            <img src="/favicon.png?v=20260413" alt={SITE_CONFIG.name} className="h-8 w-8 object-contain" />
-          </span>
+    <header className="sticky top-0 z-50 bg-[var(--editable-nav-bg)]/97 text-[var(--editable-nav-text)] backdrop-blur-md">
+      <nav className="mx-auto flex min-h-[84px] w-full max-w-[var(--editable-container)] items-center gap-6 px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="group flex shrink-0 items-center gap-3">
+          <img src="/favicon.png?v=20260413" alt={SITE_CONFIG.name} className="h-9 w-9 object-contain" />
           <span className="hidden min-w-0 md:block">
-            <span className="editable-display block max-w-[200px] truncate text-xl font-semibold leading-none tracking-[0.01em]">{SITE_CONFIG.name}</span>
-            <span className="mt-1 block max-w-[200px] truncate text-[10px] font-medium uppercase tracking-[0.26em] text-[var(--slot4-muted-text)]">
+            <span className="editable-display block max-w-[200px] truncate text-xl font-semibold leading-none tracking-[-0.01em]">{SITE_CONFIG.name}</span>
+            <span className="mt-1.5 block max-w-[200px] truncate text-[10px] font-medium uppercase tracking-[0.28em] text-white/50">
               {globalContent.nav?.tagline || SITE_CONFIG.tagline}
             </span>
           </span>
         </Link>
 
-        <div className="hidden items-stretch gap-0 lg:flex">
-          {navItems.slice(0, 5).map((item) => {
-            const active = pathname === item.href || pathname.startsWith(`${item.href}/`)
+        <div className="mx-auto hidden items-center gap-1 lg:flex">
+          {primaryNav.map((item) => {
+            const active = item.href === '/' ? pathname === '/' : pathname === item.href || pathname.startsWith(`${item.href}/`)
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative flex items-center px-4 text-[11px] font-semibold uppercase tracking-[0.22em] transition ${
-                  active ? 'text-[var(--slot4-accent)]' : 'text-[var(--slot4-muted-text)] hover:text-[var(--slot4-page-text)]'
+                className={`relative rounded-full px-4 py-2 text-[13px] font-medium tracking-[0.01em] transition duration-300 ${
+                  active ? 'bg-white/10 text-[var(--slot4-accent)]' : 'text-white/70 hover:bg-white/5 hover:text-white'
                 }`}
               >
                 {item.label}
-                {active ? <span className="absolute inset-x-3 bottom-0 h-[2px] bg-[var(--slot4-accent)]" /> : null}
               </Link>
             )
           })}
         </div>
-
-        <form action="/search" className="mx-auto hidden min-w-0 flex-1 justify-center md:flex">
-          <label className="flex w-full max-w-md items-center gap-2 border-b border-[var(--slot4-accent)]/30 pb-2 transition focus-within:border-[var(--slot4-accent)]">
-            <Search className="h-4 w-4 shrink-0 text-[var(--slot4-accent)]" />
-            <input
-              name="q"
-              type="search"
-              placeholder="Search posts"
-              className="min-w-0 flex-1 bg-transparent text-sm font-medium outline-none placeholder:text-[var(--slot4-muted-text)]"
-            />
-          </label>
-        </form>
 
         <div className="ml-auto flex shrink-0 items-center gap-2">
           {session ? (
             <>
               <Link
                 href="/create"
-                className="hidden items-center gap-2 border border-[var(--slot4-accent)] bg-[var(--editable-cta-bg)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--editable-cta-text)] transition hover:opacity-90 sm:inline-flex"
+                className="hidden items-center gap-2 rounded-full bg-[var(--slot4-accent)] px-4 py-2.5 text-[13px] font-semibold text-[var(--slot4-on-accent)] transition duration-300 hover:brightness-95 sm:inline-flex"
               >
                 <PlusCircle className="h-3.5 w-3.5" /> Create
               </Link>
               <button
                 type="button"
                 onClick={logout}
-                className="hidden items-center gap-2 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--slot4-muted-text)] transition hover:text-[var(--slot4-page-text)] sm:inline-flex"
+                className="hidden items-center gap-2 rounded-full px-3 py-2.5 text-[13px] font-medium text-white/60 transition duration-300 hover:text-white sm:inline-flex"
               >
                 Logout
               </button>
@@ -85,13 +79,13 @@ export function EditableNavbar() {
             <>
               <Link
                 href="/login"
-                className="hidden items-center gap-2 border border-[var(--editable-border)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--slot4-muted-text)] transition hover:border-[var(--slot4-accent)]/40 hover:text-[var(--slot4-page-text)] sm:inline-flex"
+                className="hidden items-center gap-2 rounded-full border border-white/15 px-4 py-2.5 text-[13px] font-medium text-white/70 transition duration-300 hover:border-white/30 hover:text-white sm:inline-flex"
               >
                 <LogIn className="h-3.5 w-3.5" /> Login
               </Link>
               <Link
                 href="/signup"
-                className="hidden items-center gap-2 border border-[var(--slot4-accent)] bg-[var(--editable-cta-bg)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--editable-cta-text)] transition hover:opacity-90 sm:inline-flex"
+                className="hidden items-center gap-2 rounded-full bg-[var(--slot4-accent)] px-4 py-2.5 text-[13px] font-semibold text-[var(--slot4-on-accent)] transition duration-300 hover:brightness-95 sm:inline-flex"
               >
                 <UserPlus className="h-3.5 w-3.5" /> Sign up
               </Link>
@@ -100,7 +94,7 @@ export function EditableNavbar() {
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
-            className="border border-[var(--editable-border)] bg-[var(--slot4-surface-bg)] p-2 lg:hidden"
+            className="rounded-full border border-white/15 bg-white/5 p-2.5 text-white lg:hidden"
             aria-label="Toggle menu"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -108,26 +102,22 @@ export function EditableNavbar() {
         </div>
       </nav>
 
-      <div className="h-px bg-[var(--editable-border)]" />
+      <div className="h-px bg-white/10" />
 
       {open ? (
-        <div className="border-t border-[var(--editable-border)] bg-[var(--editable-nav-bg)] px-4 py-5 lg:hidden">
-          <form action="/search" className="mb-5 flex items-center gap-2 border-b border-[var(--slot4-accent)]/30 pb-2">
-            <Search className="h-4 w-4 text-[var(--slot4-accent)]" />
-            <input name="q" type="search" placeholder="Search posts" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[var(--slot4-muted-text)]" />
-          </form>
+        <div className="border-t border-white/10 bg-[var(--editable-nav-bg)] px-4 py-5 lg:hidden">
           <div className="grid gap-1">
-            {[{ label: 'Home', href: '/' }, ...navItems, { label: 'Contact', href: '/contact' }, ...(session ? [{ label: 'Create', href: '/create' }] : [{ label: 'Login', href: '/login' }, { label: 'Sign up', href: '/signup' }])].map((item) => {
-              const active = pathname === item.href || pathname.startsWith(`${item.href}/`)
+            {[...primaryNav, { label: 'Contact', href: '/contact' }, ...(session ? [{ label: 'Create', href: '/create' }] : [{ label: 'Login', href: '/login' }, { label: 'Sign up', href: '/signup' }])].map((item) => {
+              const active = item.href === '/' ? pathname === '/' : pathname === item.href || pathname.startsWith(`${item.href}/`)
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`border-l-2 px-4 py-3 text-sm font-semibold uppercase tracking-[0.16em] ${
+                  className={`rounded-xl px-4 py-3 text-sm font-medium transition duration-300 ${
                     active
-                      ? 'border-[var(--slot4-accent)] bg-[var(--slot4-surface-bg)] text-[var(--slot4-accent)]'
-                      : 'border-transparent text-[var(--slot4-muted-text)] hover:border-[var(--slot4-accent)]/40 hover:bg-[var(--slot4-surface-bg)]'
+                      ? 'bg-white/10 text-[var(--slot4-accent)]'
+                      : 'text-white/70 hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   {item.label}
