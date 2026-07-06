@@ -99,7 +99,7 @@ export default function CommentsPage() {
               <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">
                 <MessageSquare className="h-4 w-4" /> Local comments
               </p>
-              <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">Comments</h1>
+              <h1 className="editable-display mt-4 text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">Comments</h1>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
                 Review comments saved in this browser from article pages.
               </p>

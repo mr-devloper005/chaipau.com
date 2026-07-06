@@ -36,11 +36,11 @@ export const taskPageVoices = {
   },
   profile: {
     eyebrow: 'People and profiles',
-    headline: 'Profiles with identity, trust, and reputation cues.',
-    description: 'Profile pages should make people, brands, and entities feel discoverable rather than buried in a generic feed.',
+    headline: 'Meet the business owners shaping their industries.',
+    description: 'A refined directory of business-owner profiles — identity, credibility, and reputation presented with the care of a magazine feature.',
     filterLabel: 'Filter profile category',
     secondaryNote: 'Make identity and credibility visible before the grid begins.',
-    chips: ['Identity first', 'Trust cues', 'Creator/business cards'],
+    chips: ['Identity first', 'Trust cues', 'Business owner cards'],
   },
   pdf: {
     eyebrow: 'Document library',
@@ -60,8 +60,8 @@ export const taskPageVoices = {
   },
   image: {
     eyebrow: 'Visual gallery',
-    headline: 'Image posts with a gallery-first browsing experience.',
-    description: 'Image pages should lead with visual impact, stronger cards, and a portfolio-like rhythm.',
+    headline: 'A gallery-first showcase of standout work and spaces.',
+    description: 'Bold imagery, generous whitespace, and a portfolio-like rhythm that lets the visuals lead.',
     filterLabel: 'Filter visual category',
     secondaryNote: 'Let images carry the page before long text does.',
     chips: ['Gallery', 'Visual-first', 'Portfolio mood'],
