@@ -564,7 +564,11 @@ function BadgeLine({ label, value }: { label: string; value: string }) {
   )
 }
 
+<<<<<<< HEAD
 function RelatedPanel({ task, related }: { task: TaskKey; related: SitePost[] }) {
+=======
+function RelatedPanel({ task, related }: { task: TaskKey; post: SitePost; related: SitePost[] }) {
+>>>>>>> ae7d741 (Layout :Logo Update)
   const taskConfig = getTaskConfig(task)
   return (
     <div className="space-y-6">
